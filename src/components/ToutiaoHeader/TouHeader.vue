@@ -6,8 +6,9 @@
        <div class="position_l">
         <a href="#" class="message-box"></a>
        </div>
-       <div class="position_m">
+       <div class="position_m" @click="handleRefreshClick">
         <a href="#" class="logo"></a>
+        // 点击刷新按钮有旋转动画
         <a href="#" class="refresh"></a>
        </div>
        <div class="position_r">
@@ -16,11 +17,34 @@
     </div>
 </template>
 
-<script type="text/ecmascript-6">
-    export default {}
+<script>
+    import Velocity from 'velocity-animate'
+
+    export default {
+        data() {
+            return {
+                // 刷新按钮动画是否播放中,默认为false
+                refreshAnimatePlaying: false
+            }
+        },
+        methods: {
+            handleRefreshClick(event) {
+                event.preventDefault()
+                let refreshBtn = document.querySelector('.position_m>.refresh')
+                Velocity(refreshBtn, {
+                    rotateZ: '360deg'
+                }, {duration: 500,
+                    complete: function(){
+                        // 旋转动画完成后，马上复位rotateZ
+                        Velocity(refreshBtn, {rotateZ: '0deg'}, {duration: 0})
+                    }
+                })
+            }
+        }
+    }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss">
     @import '../../common/style/basic.scss';
     @import '../../common/style/mixin.scss';
 
@@ -71,5 +95,14 @@
                 @include attr-px-dpr(margin-right, 12px);
             }
         }
+        // .rotate {
+        //     transform: rotateZ(360deg);
+        // }
     }
+    // .rotate-enter-active, .rotate-leave-active {
+    //     transition: all .5s linear;
+    // }
+    // .rotate-enter, .rotate-leave-to  {
+    //     transfrom: rotateZ(0deg);
+    // }
 </style>

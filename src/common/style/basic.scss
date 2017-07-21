@@ -1,1 +1,8 @@
 $theme-color: #D43D3D;
+
+//移动端点击a标签有阴影的解决方法
+a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
