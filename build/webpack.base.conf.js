@@ -32,6 +32,7 @@ module.exports = {
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
+        exclude: /flexible.js/,
         options: {
           formatter: require('eslint-friendly-formatter')
         }

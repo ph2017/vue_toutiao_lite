@@ -22,6 +22,23 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+
+    //不检查末尾的;
+    'semi': 0,
+
+    //不检查函数名后大括号({})之间的空格
+    'space-before-blocks': 0,
+
+    'indent': 0,
+
+    //函数名与后面括号之间的空格
+    'space-before-function-paren': 0,
+
+    //函数体后的换行符
+    'eol-last': 0,
+
+    //函数体内的换行
+    'padded-blocks': 0
   }
 }
