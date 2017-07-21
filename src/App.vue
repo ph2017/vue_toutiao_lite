@@ -1,23 +1,28 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+   <header>
+      <v-TouHeader></v-TouHeader>
+   </header>
+   <main>
+      <v-TouMain></v-TouMain>
+   </main>
   </div>
 </template>
 
 <script>
+import TouHeader from 'components/ToutiaoHeader/TouHeader'
+import TouMain from 'components/ToutiaoMain/TouMain'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    // 头条的头部
+    'v-TouHeader': TouHeader,
+    'v-TouMain': TouMain
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
