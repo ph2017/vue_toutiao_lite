@@ -1,9 +1,14 @@
 <template>
     <div>
         <nav class="toutiao-nav">
-            
+            <div class="more-wrapper">
+                <div class="list-shadow"></div>
+                <router-link to="more" class="more-btn" active-class>
+                    <span class="cross"></span>
+                </router-link>
+            </div> 
             <div ref="navWrapper" class="nav-wrapper">
-                <ul class="nav-item-wrapper clearfix">
+                <ul class="nav-item-wrapper">
                     <li v-for="(item, index) in navTitle" key="index" class="nav-item">
                         <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
                     </li>
@@ -58,6 +63,18 @@
             @include attr-px-dpr(height, 36px);
             white-space: nowrap;
             overflow: hidden;
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background-image: -webkit-linear-gradient(top,transparent,transparent 40%,#ddd 0);
+                background-size: 100% 1px;
+                background-position: bottom;
+                background-repeat: no-repeat;
+            }
             .nav-item-wrapper {
                 position: absolute;
                 white-space: nowrap;
@@ -91,12 +108,15 @@
             }
         }
         .more-wrapper {
-            float: right;
-            position: relative;
+            position: absolute;
+            right: 0;
+            background-color:$nav-grey;
+            opacity: 1;
+            z-index: 2;
             .list-shadow {
                 position: absolute;
                 @include attr-px-dpr(left, -10px);
-                @include attr-px-dpr(height, 36px);
+                @include attr-px-dpr(height, 35px);
                 @include attr-px-dpr(width, 10px);
                 background: url('./images/shadow.png') no-repeat center;
                 background-size: contain;
@@ -104,7 +124,7 @@
             .more-btn {
                 position: relative;
                 display: block;
-                @include attr-px-dpr(height, 36px);
+                @include attr-px-dpr(height, 35px);
                 @include attr-px-dpr(width, 40px);
                 @include attr-px-dpr(line-height, 36px);
                 .cross {
@@ -123,6 +143,7 @@
                     @include attr-px-dpr(height, 17px);
                     width: 4px;
                     background-color: #f85959;
+                    opacity: .8;
                 }
                 .cross:before {
                     left: 50%;
