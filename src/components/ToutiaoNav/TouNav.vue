@@ -56,33 +56,36 @@
             width: 100%;
             position: relative;
             @include attr-px-dpr(height, 36px);
-        }
-        .nav-item-wrapper {
-            position: absolute;
             white-space: nowrap;
             overflow: hidden;
-            overflow-x: scroll;
-            -webkit-overflow-scrolling: touch;
-            &::-webkit-scrollbar {
-                display: none;
-            }
-            .nav-item{
-                display: inline-block;
-                >a{
+            .nav-item-wrapper {
+                position: absolute;
+                white-space: nowrap;
+                overflow: hidden;
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
+                &::-webkit-scrollbar {
+                    // 移动端滚动条隐藏
+                    display: none;
+                }
+                .nav-item{
                     display: inline-block;
-                    @include attr-px-dpr(height, 26px);
-                    @include attr-px-dpr(margin-top, 5px);
-                    @include attr-px-dpr(margin-bottom, 5px);
-                    @include attr-px-dpr(margin-left, 5px);
-                    @include attr-px-dpr(padding-left, 10px);
-                    @include attr-px-dpr(padding-right, 10px);
-                    @include attr-px-dpr(font-size, 17px);
-                    @include attr-px-dpr(line-height, 26px);
-                    color: $nav-text-color;
-                    white-space: nowrap;
-                    -webkit-tap-highlight-color: rgba(0,0,0,.3);
-                    &.router-link-active {
-                        color: $nav-text-active-color;
+                    >a{
+                        display: inline-block;
+                        @include attr-px-dpr(height, 26px);
+                        @include attr-px-dpr(margin-top, 5px);
+                        @include attr-px-dpr(margin-bottom, 5px);
+                        @include attr-px-dpr(margin-left, 5px);
+                        @include attr-px-dpr(padding-left, 10px);
+                        @include attr-px-dpr(padding-right, 10px);
+                        @include attr-px-dpr(font-size, 17px);
+                        @include attr-px-dpr(line-height, 26px);
+                        color: $nav-text-color;
+                        white-space: nowrap;
+                        -webkit-tap-highlight-color: rgba(0,0,0,.3);
+                        &.router-link-active {
+                            color: $nav-text-active-color;
+                        }
                     }
                 }
             }
