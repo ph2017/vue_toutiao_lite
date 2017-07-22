@@ -2,7 +2,7 @@
     <nav class="toutiao-nav">
         <div class="more-wrapper">
             <div class="list-shadow"></div>
-            <router-link to="more" class="more-btn">
+            <router-link to="more" class="more-btn" active-class>
                 <span class="cross"></span>
             </router-link>
         </div>
@@ -41,7 +41,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            // overflow-x: scroll; 
+            overflow-x: scroll;
             white-space: nowrap;
             .nav-item{
                 >a{
@@ -56,6 +56,9 @@
                     @include attr-px-dpr(line-height, 26px);
                     color: $nav-text-color;
                     white-space: nowrap;
+                    &.router-link-active {
+                        color: $nav-text-active-color;
+                    }
                 }
             }
         }
