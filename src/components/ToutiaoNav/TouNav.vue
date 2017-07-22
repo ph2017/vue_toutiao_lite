@@ -1,21 +1,22 @@
 <template>
-    <nav class="toutiao-nav">
-        <div class="more-wrapper">
-            <div class="list-shadow"></div>
-            <router-link to="more" class="more-btn" active-class>
-                <span class="cross"></span>
-            </router-link>
-        </div>
-        <ol class="nav-item-wrapper">
-            <li v-for="(item, index) in navTitle" key="index" class="nav-item">
-                <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
-            </li>
-        </ol>
-        
-    </nav>
+    <div>
+        <nav class="toutiao-nav">
+            
+            <div ref="navWrapper" class="nav-wrapper">
+                <ul class="nav-item-wrapper clearfix">
+                    <li v-for="(item, index) in navTitle" key="index" class="nav-item">
+                        <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </template>
 
 <script>
+    // 滑动区域效果优化的插件
+    import BScroll from 'better-scroll'
+
     export default {
         props: {
             // 导航条的栏目名称数组，必要
@@ -23,6 +24,24 @@
                 type: Array,
                 required: true
             }
+        },
+        methods: {
+            initNavScroll() {
+                this.navScroll = new BScroll(this.$refs.navWrapper, {
+                    // 结合BScroll的接口使用,是否将click事件传递,默认被拦截了
+                    click: true,
+                    probeType: 3,
+                    scrollX: true,
+                    scrollY: false
+                });
+            }
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.initNavScroll()
+                let ul = document.querySelector('.nav-item-wrapper')
+                console.log('ul = ' + ul)
+            })
         }
     }
 </script>
@@ -33,17 +52,22 @@
 
     .toutiao-nav {
         background-color: $nav-grey;
+        .nav-wrapper{
+            width: 100%;
+            position: relative;
+            @include attr-px-dpr(height, 36px);
+        }
         .nav-item-wrapper {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: no-wrap;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
+            position: absolute;
+            white-space: nowrap;
             overflow: hidden;
             overflow-x: scroll;
-            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             .nav-item{
+                display: inline-block;
                 >a{
                     display: inline-block;
                     @include attr-px-dpr(height, 26px);
@@ -56,6 +80,7 @@
                     @include attr-px-dpr(line-height, 26px);
                     color: $nav-text-color;
                     white-space: nowrap;
+                    -webkit-tap-highlight-color: rgba(0,0,0,.3);
                     &.router-link-active {
                         color: $nav-text-active-color;
                     }
