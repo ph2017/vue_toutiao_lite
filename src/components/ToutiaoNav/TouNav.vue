@@ -24,6 +24,13 @@
     import {mapActions} from 'vuex'
 
     export default {
+        data() {
+            return {
+                // 记录点击导航菜单动作时navScroll的x轴偏移， 例子：__all__:{x: 20}
+                // 记录之后，方便在路由改变时，自动便宜到上次操作的位置
+                scrollStatus: {}
+            }
+        },
         props: {
             // 导航条的栏目名称数组，必要
             navTitle: {
@@ -42,16 +49,62 @@
                     scrollY: false
                 })
             },
+            getRouteQueryParam() {
+                return this.$route.query.type
+            },
             // 导航菜单点击处理方法
             handleNavClick() {
-                let routeParam = this.$route.query.type
+                let routeParam = this.getRouteQueryParam()
+                
+                // 记录当前导航菜单的x轴滚动偏移
+                this.recordNavScrollX(routeParam)
+
                 // 调用getNews这个action, 传入当前导航菜单参数
                 this.getNews({newsType: routeParam})
+            },
+            // 记录当前导航菜单x轴偏移的方法，在点击导航菜单时调用
+            recordNavScrollX(newsType) {
+                // this.navScroll.x 可以获取betterScroll插件的x轴偏移量
+                let scrollX = this.navScroll.x
+                let scrollStatus = this.scrollStatus
+
+                if (scrollStatus[newsType]) {
+                    // this.scrollStatus中存在newsType对象的话，则修改
+                    this.$set(scrollStatus[newsType], 'x', scrollX)
+                } else {
+                    // 否则添加
+                    this.$set(scrollStatus, newsType, {x: scrollX})
+                }
+            },
+            // 从this.scrollStatus缓存中查询导航菜单的x轴偏移量
+            getRecordNavScrollX(newsType) {
+                let scrollObj = this.scrollStatus[newsType]
+                if (scrollObj) {
+                    return scrollObj.x
+                } else {
+                    return 0
+                }
+            },
+            // betterScroll根据参数，自动滚动到对应位置
+            autoScrollTo(betterScroll, x = 0, y = 0) {
+                if (betterScroll) {
+                    betterScroll.scrollTo(x, y, 500)
+                }
             },
             ...mapActions([
                 // 映射 this.getNews() 为 this.$store.dispatch('getNews')
                 'getNews' 
             ])
+        },
+        watch: {
+            '$route': function() {
+                let routeParam = this.getRouteQueryParam()
+                let scrollX = this.getRecordNavScrollX(routeParam)
+                this.autoScrollTo(this.navScroll, scrollX, 0)
+            }
+        },
+        computed: {
+            
         },
         mounted() {
             this.$nextTick(() => {
@@ -59,6 +112,10 @@
                 let ul = document.querySelector('.nav-item-wrapper')
                 console.log('ul = ' + ul)
             })
+        },
+        destroyed() {
+            // 组件销毁时，解除betterScroll的绑定关系
+            this.navScroll.destroy()
         }
     }
 </script>
@@ -70,7 +127,8 @@
     .toutiao-nav {
         background-color: $nav-grey;
         .nav-wrapper{
-            width: 100%;
+            width: 90%;
+            box-sizing: border-box;
             position: relative;
             @include attr-px-dpr(height, 36px);
             white-space: nowrap;
