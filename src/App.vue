@@ -29,7 +29,9 @@ export default {
   components: {
     // 头条的头部
     'v-TouHeader': TouHeader,
+    // 头条的中间内容部分
     'v-TouMain': TouMain,
+    // 导航
     'v-TouNav': TouNav
   }
 }

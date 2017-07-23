@@ -23,6 +23,22 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+// 本地模拟数据调试
+var newsListData = require('../newsList.json');
+var apiRoutes = express.Router();
+
+apiRoutes.get('/news', function (req, res) {
+  debugger
+  console.log('收到/news请求')
+	res.json({
+		errno: 0,
+		data: newsListData
+	})
+})
+
+app.use('/api', apiRoutes);
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

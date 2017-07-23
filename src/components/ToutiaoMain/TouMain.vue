@@ -3,12 +3,18 @@
 */
 <template>
     <div id="toutiao-main">
-        我是主体
+        <v-TouPanel></v-TouPanel>
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
+    import TouPanel from 'components/ToutiaoPanel/TouPanel'
 
+    export default {
+        components: {
+            'v-TouPanel': TouPanel
+        }
+    }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">

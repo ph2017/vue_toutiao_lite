@@ -3,6 +3,13 @@ $nav-grey: #F4F5F6;
 $nav-text-color: #505050;
 $nav-text-active-color: #f85959;
 
+html {
+    background: #fff;
+    font-family: STHeiti,Microsoft YaHei,Helvetica,Arial,sans-serif;
+    -webkit-text-size-adjust: none;
+    word-break: break-word;
+}
+
 //移动端点击a标签有阴影的解决方法
 a {
   -webkit-tap-highlight-color: transparent;
@@ -14,4 +21,9 @@ a {
     content: ' ';
     display: block;
     clear: both;
+}
+
+.line3 {
+    // 限制在一个块元素显示的文本的行数
+    -webkit-line-clamp: 3;
 }
