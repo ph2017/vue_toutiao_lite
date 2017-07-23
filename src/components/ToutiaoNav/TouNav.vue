@@ -9,7 +9,7 @@
             </div> 
             <div ref="navWrapper" class="nav-wrapper">
                 <ul class="nav-item-wrapper">
-                    <li v-for="(item, index) in navTitle" key="index" class="nav-item">
+                    <li v-for="(item, index) in navTitle" key="index" class="nav-item" @click="handleNavClick">
                         <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
                     </li>
                 </ul>
@@ -21,6 +21,7 @@
 <script>
     // 滑动区域效果优化的插件
     import BScroll from 'better-scroll'
+    import {mapActions} from 'vuex'
 
     export default {
         props: {
@@ -38,8 +39,15 @@
                     probeType: 3,
                     scrollX: true,
                     scrollY: false
-                });
-            }
+                })
+            },
+            handleNavClick() {
+                this.getNews({newsType: '__all__'})
+            },
+            ...mapActions([
+                // 映射 this.getNews() 为 this.$store.dispatch('getNews')
+                'getNews' 
+            ])
         },
         mounted() {
             this.$nextTick(() => {

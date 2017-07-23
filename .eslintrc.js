@@ -39,6 +39,9 @@ module.exports = {
     'eol-last': 0,
 
     //函数体内的换行
-    'padded-blocks': 0
+    'padded-blocks': 0,
+
+    //{} xxx 大括号后的空格
+    'no-trailing-spaces': 0
   }
 }
