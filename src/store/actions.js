@@ -39,10 +39,11 @@ export default {
         axios.get('/api/news')
             .then(function (response) {
                 console.log('请求本地接口成功');
+                debugger
                 // 结束获取新闻
                 commit(GET_NEWS_END, {newsType: payload.newsType});
                 // 处理获取到的新闻
-                commit(GET_NEWS, {newsType: payload.newsType, news: response.data});
+                commit(GET_NEWS, {newsType: payload.newsType, news: response.data.data.data});
             })
             .catch(function (error) {
                 console.log('请求本地接口失败', error);

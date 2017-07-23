@@ -6,17 +6,17 @@ export default {
      * @param {$store.state, 会自动注入} state 
      * @param {触发mutation时的参数} payload 
      */
-    [GET_NEWS](state, payload = {newsType: '__all__', newArray: []}) {
+    [GET_NEWS](state, payload = {newsType: '__all__', news: []}) {
         let newsType = payload.newsType
-        let newsArray = payload.newsArray
+        let news = payload.news
         
         if (state.newsArray[newsType]){
             // newsArray中已存在对应的新闻类别
             // 把获取到的新闻数据放入store中的state.newsArray
-            state.newsArray[newsType] = [...state.newsArray[newsType], newsArray]
+            state.newsArray[newsType].news = [...state.newsArray[newsType].news, ...news]
         } else {
             // state.newsArray中不存在对应的新闻类别, 则在state.newsArray中添加
-            state.newsArray = {...state.newsArray, newsType: newsArray}
+            state.newsArray = {...state.newsArray, newsType: {isFetching: false, news: news}}
         }
         
     },
@@ -28,7 +28,6 @@ export default {
      */
     [GET_NEWS_START](state, payload = {newsType: '__all__'}) {
         let newsType = payload.newsType
-        debugger
         if (state.newsArray[newsType]){
             // newsArray中已存在对应的新闻类别
             // 把对应新闻类别对象中的isFetching设置为true
