@@ -9,11 +9,15 @@ export default {
     [GET_NEWS](state, payload = {newsType: '__all__', news: []}) {
         let newsType = payload.newsType
         let news = payload.news
-        
         if (state.newsArray[newsType]){
             // newsArray中已存在对应的新闻类别
             // 把获取到的新闻数据放入store中的state.newsArray
-            state.newsArray[newsType].news = [...state.newsArray[newsType].news, ...news]
+            if (state.newsArray[newsType].news) {
+                state.newsArray[newsType].news = [...state.newsArray[newsType].news, ...news]
+            } else {
+                state.newsArray[newsType].news = [...news]
+            }
+            
         } else {
             // state.newsArray中不存在对应的新闻类别, 则在state.newsArray中添加
             state.newsArray = {...state.newsArray, newsType: {isFetching: false, news: news}}

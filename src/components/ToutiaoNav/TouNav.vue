@@ -32,6 +32,7 @@
             }
         },
         methods: {
+            // 初始化导航栏的betterScroll插件
             initNavScroll() {
                 this.navScroll = new BScroll(this.$refs.navWrapper, {
                     // 结合BScroll的接口使用,是否将click事件传递,默认被拦截了
@@ -41,8 +42,11 @@
                     scrollY: false
                 })
             },
+            // 导航菜单点击处理方法
             handleNavClick() {
-                this.getNews({newsType: '__all__'})
+                let routeParam = this.$route.query.type
+                // 调用getNews这个action, 传入当前导航菜单参数
+                this.getNews({newsType: routeParam})
             },
             ...mapActions([
                 // 映射 this.getNews() 为 this.$store.dispatch('getNews')

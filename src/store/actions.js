@@ -1,5 +1,5 @@
-import axios from 'axios'
-// import jsonp from 'jsonp'
+// import axios from 'axios'
+import jsonp from 'jsonp'
 import {GET_NEWS_START, GET_NEWS_END, GET_NEWS} from './mutations-types'
 
 // 今日头条的api
@@ -19,37 +19,38 @@ export default {
         // 开始获取新闻
         commit(GET_NEWS_START, {newsType: payload.newsType})
 
+        let newsUrlApi = 'http://m.toutiao.com/list/?tag=' + payload.newsType + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
         // 调用今日头条接口，异步查询
-        // jsonp(newsUrlApi,
-        //     function(err, res) {
-        //         console.log('jsonp请求成功', res)
-        //         if (res) {
-        //             // 结束获取新闻
-        //             commit(GET_NEWS_END, {newsType: payload.newsType});
-        //             // 处理获取到的新闻
-        //             commit(GET_NEWS, {newsType: payload.newsType, news: res.data});
-        //         } else if (err) {
-        //             console.log('请求失败', err)
-        //             // 结束获取新闻
-        //             commit(GET_NEWS_END, {newsType: payload.newsType});
-        //         }
-        // })
+        jsonp(newsUrlApi,
+            function(err, res) {
+                console.log('jsonp请求成功', res)
+                if (res) {
+                    // 结束获取新闻
+                    commit(GET_NEWS_END, {newsType: payload.newsType});
+                    // 处理获取到的新闻
+                    commit(GET_NEWS, {newsType: payload.newsType, news: res.data});
+                } else if (err) {
+                    console.log('请求失败', err)
+                    // 结束获取新闻
+                    commit(GET_NEWS_END, {newsType: payload.newsType});
+                }
+        })
 
         // 本地接口调试
-        axios.get('/api/news')
-            .then(function (response) {
-                console.log('请求本地接口成功');
-                debugger
-                // 结束获取新闻
-                commit(GET_NEWS_END, {newsType: payload.newsType});
-                // 处理获取到的新闻
-                commit(GET_NEWS, {newsType: payload.newsType, news: response.data.data.data});
-            })
-            .catch(function (error) {
-                console.log('请求本地接口失败', error);
-                // 结束获取新闻
-                commit(GET_NEWS_END, {newsType: payload.newsType});
-            });
+        // axios.get('/api/news')
+        //     .then(function (response) {
+        //         console.log('请求本地接口成功');
+        //         debugger
+        //         // 结束获取新闻
+        //         commit(GET_NEWS_END, {newsType: payload.newsType});
+        //         // 处理获取到的新闻
+        //         commit(GET_NEWS, {newsType: payload.newsType, news: response.data.data.data});
+        //     })
+        //     .catch(function (error) {
+        //         console.log('请求本地接口失败', error);
+        //         // 结束获取新闻
+        //         commit(GET_NEWS_END, {newsType: payload.newsType});
+        //     });
     }
         
 }

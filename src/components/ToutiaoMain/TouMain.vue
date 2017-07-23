@@ -19,7 +19,8 @@
         },
         computed: {
             news() {
-                return this.$store.state.newsArray.__all__.news
+                let newsType = this.$route.query.type
+                return this.$store.state.newsArray[newsType].news
             }
         }
     }
