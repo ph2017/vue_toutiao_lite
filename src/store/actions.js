@@ -23,8 +23,8 @@ export default {
         // 调用今日头条接口，异步查询
         jsonp(newsUrlApi,
             function(err, res) {
-                console.log('jsonp请求成功', res)
                 if (res) {
+                    console.log('jsonp请求成功', res)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 处理获取到的新闻
@@ -73,8 +73,8 @@ export default {
         // 调用今日头条接口，异步查询
         jsonp(newsUrlApi,
             function(err, res) {
-                console.log('jsonp请求成功', res)
                 if (res) {
+                    console.log('jsonp请求成功', res)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 处理获取到的新闻

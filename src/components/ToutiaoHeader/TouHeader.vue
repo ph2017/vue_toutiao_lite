@@ -7,9 +7,9 @@
         <a href="#" class="message-box"></a>
        </div>
        <div class="position_m" @click="handleRefreshClick">
-        <a href="#" class="logo"></a>
-        // 点击刷新按钮有旋转动画
-        <a href="#" class="refresh"></a>
+        <a href="javascript:void(0)" class="logo"></a>
+         <!--点击刷新按钮有旋转动画-->
+        <a href="javascript:void(0)" :class="isFetchingNews? 'rotage-animate refresh' : 'refresh'"></a>
        </div>
        <div class="position_r">
         <a href="#" class="search"></a>
@@ -18,9 +18,13 @@
 </template>
 
 <script>
-    import Velocity from 'velocity-animate'
+    import {mapActions} from 'vuex'
+    import store from '../../store/index.js'
+    // import Velocity from 'velocity-animate'
 
     export default {
+        name: 'TouHeader',
+        store,
         data() {
             return {
                 // 刷新按钮动画是否播放中,默认为false
@@ -28,17 +32,40 @@
             }
         },
         methods: {
+            /**
+             * 获取路由查询参数的方法
+             */
+            getRouteQueryParam() {
+                // 初次加载时，$route为undefined, 
+                let type = this.$route.query.type
+                // 默认取$store.state.defaultType作为查询参数
+                if (!type) {
+                    type = this.$store.state.defaultType
+                }
+                return type
+            },
             handleRefreshClick(event) {
-                event.preventDefault()
-                let refreshBtn = document.querySelector('.position_m>.refresh')
-                Velocity(refreshBtn, {
-                    rotateZ: '360deg'
-                }, {duration: 500,
-                    complete: function(){
-                        // 旋转动画完成后，马上复位rotateZ
-                        Velocity(refreshBtn, {rotateZ: '0deg'}, {duration: 0})
-                    }
-                })
+                // event.preventDefault()
+                // let refreshBtn = document.querySelector('.position_m>.refresh')
+                // Velocity(refreshBtn, {
+                //     rotateZ: '360deg'
+                // }, {duration: 500,
+                //     complete: function(){
+                //         // 旋转动画完成后，马上复位rotateZ
+                //         Velocity(refreshBtn, {rotateZ: '0deg'}, {duration: 0})
+                //     }
+                // })
+                const type = this.getRouteQueryParam()
+                this.refreshNews({newsType: type})
+            },
+            ...mapActions([
+                'refreshNews'
+            ])
+        },
+        computed: {
+            isFetchingNews() {
+                const newsType = this.getRouteQueryParam()
+                return this.$store.state.newsArray[newsType].isFetching
             }
         }
     }
@@ -83,6 +110,17 @@
                 @include attr-px-dpr(background-size, 15px);
                 @include attr-px-dpr(height, 44px);
                 @include attr-px-dpr(width, 25px);
+            }
+            .rotage-animate {
+                animation: rotage360 1s linear infinite;
+            }
+            @keyframes rotage360 {
+                0% {
+                    transform: rotate(0);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
             }
         }
         .position_r {
