@@ -12,7 +12,7 @@
         
         <div ref="toutiaoMain" id="toutiao-main">
             <v-TouPanel v-for="(item, index) in getNewsByType" :key="index" :newsItem="item"></v-TouPanel>
-            <v-ExposureView :containerEl="exposureViewContainer" :oneProps="exposureViewOne" :fireProps="exposureViewFire">
+            <v-ExposureView :containerEl="exposureViewContainer" :onProps="exposureViewOne" :fireProps="exposureViewFire">
                 <div class="loading-tip">
                     加载中...
                 </div>

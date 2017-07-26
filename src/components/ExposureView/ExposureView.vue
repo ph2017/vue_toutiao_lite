@@ -16,7 +16,10 @@
                 // events存储事件及回调函数对象，例：
                 // {event1:[{handler:handler1},{handler:handler2}], event2:[{handler:handler1},{handler:handler2}]}
                 events: {},
-                container: {}
+                // 包裹曝光组件的容器
+                container: {},
+                // 滑动事件发生时使用的定时器，记录定时器id
+                timerID: undefined
             }
         },
         props: {
@@ -130,18 +133,25 @@
                 if (this.containerEl) {
                     this.container = document.querySelector(this.containerEl)
                     this.container.addEventListener('scroll', () => {
-                        let visiable = self.isVisiable()
-                        if (visiable) {
-                            debugger
-                            console.log('曝光组件可见!!')
-                            // 曝光组件可见时，自动触发回调函数
-                            if (self.fireProps.args) {
-                                self.fire(self.fireProps.event, ...[self.fireProps.args])
-                            } else {
-                                self.fire(self.fireProps.event)
-                            }
-                           
+                        // 先清除定时器
+                        if (self.timerID) {
+                            clearTimeout(self.timerID);
                         }
+                        // 使用定时器，防止滑动过快时产生多次加载，提高效率
+                        self.timerID = setTimeout(function() {
+                            let visiable = self.isVisiable()
+                            if (visiable) {
+                                debugger
+                                console.log('曝光组件可见!!')
+                                // 曝光组件可见时，自动触发回调函数
+                                if (self.fireProps.args) {
+                                    self.fire(self.fireProps.event, ...[self.fireProps.args])
+                                } else {
+                                    self.fire(self.fireProps.event)
+                                }
+                            
+                            }
+                        }, 300);
                     })
                 }
                 // 把父组件传进来的this.oneProps参数放入this.events中
