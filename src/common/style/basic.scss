@@ -27,3 +27,21 @@ a {
     // 限制在一个块元素显示的文本的行数
     -webkit-line-clamp: 3;
 }
+
+@font-face {
+    font-family: 'toutiao-iconfont';  /* project id 363854 */
+    src: url('//at.alicdn.com/t/font_gunoldcqvx61dcxr.eot');
+    src: url('//at.alicdn.com/t/font_gunoldcqvx61dcxr.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_gunoldcqvx61dcxr.woff') format('woff'),
+    url('//at.alicdn.com/t/font_gunoldcqvx61dcxr.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_gunoldcqvx61dcxr.svg#iconfont') format('svg');
+}
+
+.icon {
+    font-family: 'toutiao-iconfont';
+    font-style: normal;
+}
+
+.icon-refresh::before{
+  content: '\e62b';
+}

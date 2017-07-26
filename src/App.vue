@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-   <header>
+   <header class="toutiao-header">
       <v-TouHeader></v-TouHeader>
+      <v-TouNav v-bind:nav-title="navTitle"></v-TouNav>
    </header>
-   <v-TouNav v-bind:nav-title="navTitle"></v-TouNav>
-   <main>
+   <main class="toutiao-main">
       <v-TouMain></v-TouMain>
    </main>
    
@@ -37,6 +37,20 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  @import './common/style/mixin.scss';
+  
+  #app {
+    .toutiao-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    .toutiao-main {
+      position: relative;
+      @include attr-px-dpr(padding-top, 80px);
+    }
+  }
 </style>

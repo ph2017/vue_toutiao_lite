@@ -65,6 +65,8 @@ export default new Vuex.Store({
         type: 'news_fashion'
       }
     ],
+    // 设置默认加载的新闻类型是推荐
+    defaultType: '__all__',
     // 新闻内容对象数组
     newsArray: {
         __all__: {
@@ -72,16 +74,59 @@ export default new Vuex.Store({
             isFetching: false,
             news: []
         },
-        news_hot: {},
-        news_society: {},
-        news_entertainment: {},
-        news_tech: {},
-        news_car: {},
-        news_sports: {},
-        news_finance: {},
-        news_military: {},
-        news_world: {},
-        news_fashion: {}
+        news_hot: {
+          // 是否查询中
+          isFetching: false,
+          news: []
+        },
+        news_society: {
+          isFetching: false,
+          news: []
+        },
+        news_entertainment: {
+          isFetching: false,
+          news: []
+        },
+        news_tech: {
+          isFetching: false,
+          news: []
+        },
+        news_car: {
+          isFetching: false,
+          news: []
+        },
+        news_sports: {
+          isFetching: false,
+          news: []
+        },
+        news_finance: {
+          isFetching: false,
+          news: []
+        },
+        news_military: {
+          isFetching: false,
+          news: []
+        },
+        news_world: {
+          isFetching: false,
+          news: []
+        },
+        news_fashion: {
+          isFetching: false,
+          news: []
+        }
+    }
+  },
+  getters: {
+    /**
+     * 根据type获取store中的news数组
+     */
+    getNewsByType: (state, type) => {
+      let newsObj = state.newsArray[type]
+      if (newsObj) {
+        return newsObj.news
+      }
+      return []
     }
   }
 })

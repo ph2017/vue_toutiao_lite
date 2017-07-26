@@ -9,7 +9,7 @@
             </div> 
             <div ref="navWrapper" class="nav-wrapper">
                 <ul class="nav-item-wrapper">
-                    <li v-for="(item, index) in navTitle" key="index" class="nav-item" @click="handleNavClick">
+                    <li v-for="(item, index) in navTitle" :key="index" class="nav-item" @click="handleNavClick">
                         <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
                     </li>
                 </ul>
@@ -101,16 +101,18 @@
                 let routeParam = this.getRouteQueryParam()
                 let scrollX = this.getRecordNavScrollX(routeParam)
                 this.autoScrollTo(this.navScroll, scrollX, 0)
+
+                // 在TouNav控件里监听路由变化，如果是切换新闻类型，则自动调用getNews这个action查询
+                // 调用getNews这个action, 传入当前导航菜单参数
+                // this.getNews({newsType: routeParam})
             }
         },
         computed: {
             
         },
-        mounted() {
+        created() {
             this.$nextTick(() => {
                 this.initNavScroll()
-                let ul = document.querySelector('.nav-item-wrapper')
-                console.log('ul = ' + ul)
             })
         },
         destroyed() {
@@ -120,7 +122,7 @@
     }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss">
     @import '../../common/style/basic.scss';
     @import '../../common/style/mixin.scss';
 
