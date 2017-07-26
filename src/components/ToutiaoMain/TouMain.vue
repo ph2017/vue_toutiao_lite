@@ -6,7 +6,8 @@
         <div ref="touchRefreshWrapper" class="vue-touch-refresh">
             <span class="refresh-container">
                 <span ref="touchRefresh" class="refresh"><i class="icon icon-refresh"></i></span>
-            </span>{{this.msg}}
+            </span>
+            {{this.msg}}
         </div>
         
         <div ref="toutiaoMain" id="toutiao-main">
@@ -70,6 +71,9 @@
                     }
                 }
             },
+            /**
+             * 获取路由查询参数的方法
+             */
             getRouteQueryParam() {
                 // 初次加载时，$route为undefined, 
                 let type = this.$route.query.type
@@ -79,23 +83,48 @@
                 }
                 return type
             },
-            // 模拟加载数据
-            next() {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        resolve('i am the data')
-                    }, 2000)
-                })
+            // 顶部下拉刷新新闻数据的方法
+            pullDownRefreshNews() {
+                if (!this.isFetchingNews) {
+                    this.refreshNews({newsType: this.getRouteQueryParam()})
+
+                    return new Promise((resolve, reject) => {
+                        const timer = setInterval(() => {
+                            if (!this.isFetchingNews && !this.fetchNewsError) {
+                                resolve('fetch news success')
+                                clearInterval(timer)
+                            } else if (!this.isFetchingNews && this.fetchNewsError) {
+                                reject('fetch news error,' + this.fetchNewsError)
+                                clearInterval(timer)
+                            }
+                            console.log('timer ++++++++++')
+                        }, 300)
+                    })
+                }
+                // return new Promise((resolve, reject) => {
+                //         setTimeout(() => {
+                //             resolve('i am the data')
+                //         }, 2000)
+                //     })
             },
             ...mapActions([
                 // 映射 this.getNews() 为 this.$store.dispatch('getNews')
-                'getNews' 
+                'getNews',
+                'refreshNews'
             ])
         },
         computed: {
             getNewsByType() {
                 const newsType = this.getRouteQueryParam()
                 return this.$store.state.newsArray[newsType].news
+            },
+            isFetchingNews() {
+                const newsType = this.getRouteQueryParam()
+                return this.$store.state.newsArray[newsType].isFetching
+            },
+            fetchNewsError() {
+                const newsType = this.getRouteQueryParam()
+                return this.$store.state.newsArray[newsType].FetchError
             }
         },
         // watch: {
@@ -120,17 +149,18 @@
                 container.style.height = window.innerHeight + 'px'
                 this.initScrollListener()
 
+                // 监听触摸开始事件
                 container.addEventListener('touchstart', (event) => {
 
                     // 如果此时loading = true,表示刷新正在进行，此时阻止下拉操作，返回
-                    if (this.loading) {
-                        event.preventDefault()
-                        return
-                    }
+                    // if (this.loading) {
+                    //     event.preventDefault()
+                    //     return
+                    // }
                     // 记录第一个触摸点作为起始位置
                     this.touchStart = event.targetTouches[0].clientY
                     console.log('touchStart point', this.touchStart)
-                })
+                }, {passive: true})
 
                 container.addEventListener('touchmove', (event) => {
 
@@ -139,10 +169,10 @@
                         return
                     }
                     // 如果此时loading = true,表示刷新正在进行，此时阻止下拉操作，返回
-                    if (this.loading) {
-                        event.preventDefault()
-                        return
-                    }
+                    // if (this.loading) {
+                    //     event.preventDefault()
+                    //     return
+                    // }
 
                     const touch = event.targetTouches[0]
                     const distanceY = touch.clientY
@@ -173,7 +203,7 @@
                             this.msg = '下拉刷新'
                         }
                     }
-                })
+                }, {passive: true})
 
                 container.addEventListener('touchend', (event) => {
 
@@ -188,14 +218,14 @@
                     if (this.distance === 0) {
                         return
                     }
-                    if (this.loading) {
-                        event.preventDefault()
-                        return
-                    }
+                    // if (this.loading) {
+                    //     event.preventDefault()
+                    //     return
+                    // }
                     if (this.flag && this.distance > 0) {
                         // touchRefreshWrapper.style.height = this.distance + 'px'
                         this.loading = true
-                        this.next().then((data) => {
+                        this.pullDownRefreshNews().then((data) => {
                             console.log('模拟异步查询', data)
                             this.flag = false
                             this.loading = false
@@ -209,7 +239,7 @@
                     // 不是下拉刷新的情况下，不做任何处理
                     this.flag = 0
                 })
-            })
+            }, {passive: true})
             
         },
         components: {
@@ -233,7 +263,7 @@
         height: 0;
         width: 100%;
         background-color: transparent;
-        transition: all .5s ease-in-out;
+        // transition: all .5s ease-in-out;
         .refresh-container {
             position: absolute;
             left: 50%;

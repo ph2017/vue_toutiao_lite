@@ -1,4 +1,4 @@
-import {GET_NEWS_START, GET_NEWS_END, GET_NEWS} from './mutations-types'
+import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS} from './mutations-types'
 
 export default {
     /**
@@ -6,23 +6,45 @@ export default {
      * @param {$store.state, 会自动注入} state 
      * @param {触发mutation时的参数} payload 
      */
-    [GET_NEWS](state, {newsType = '__all__', news = []}) {
-        let type = newsType
-        let newsArr = news
-        if (state.newsArray[type]){
+    [GET_NEWS](state, {newsType = '__all__', news = [], returnCount = 0}) {
+        if (state.newsArray[newsType]){
             // newsArray中已存在对应的新闻类别
             // 把获取到的新闻数据放入store中的state.newsArray
-            if (state.newsArray[type].news) {
-                state.newsArray[type].news = [...state.newsArray[newsType].news, ...newsArr]
+            if (state.newsArray[newsType].news) {
+                state.newsArray[newsType].news = [...state.newsArray[newsType].news, ...news]
             } else {
-                state.newsArray[type].news = [...newsArr]
+                state.newsArray[newsType].news = [...news]
             }
             
         } else {
             // state.newsArray中不存在对应的新闻类别, 则在state.newsArray中添加
-            state.newsArray = {...state.newsArray, newsType: {isFetching: false, news: newsArr}}
+            state.newsArray = {...state.newsArray, newsType: {isFetching: false, news: news}}
         }
+        state.newsArray[newsType].returnCount = returnCount
         
+    },
+
+    /**
+     * 刷新新闻的mutation，
+     * 与GET_NEWS的区别是：刷新新闻会把获取到的新闻放在前面
+     * @param {$store.state, 会自动注入} state 
+     * @param {触发mutation时的参数} payload 
+     */
+    [REFRESH_NEWS](state, {newsType = '__all__', news = [], returnCount = 0}) {
+        if (state.newsArray[newsType]){
+            // newsArray中已存在对应的新闻类别
+            // 把获取到的新闻数据放入store中的state.newsArray
+            if (state.newsArray[newsType].news) {
+                state.newsArray[newsType].news = [...news, ...state.newsArray[newsType].news]
+            } else {
+                state.newsArray[newsType].news = [...news]
+            }
+            
+        } else {
+            // state.newsArray中不存在对应的新闻类别, 则在state.newsArray中添加
+            state.newsArray = {...state.newsArray, newsType: {isFetching: false, news: news}}
+        }
+        state.newsArray[newsType].returnCount = returnCount
     },
 
     /**
@@ -53,6 +75,20 @@ export default {
             // newsArray中已存在对应的新闻类别
             // 把对应新闻类别对象中的isFetching设置为false
             state.newsArray[newsType] = {...state.newsArray[newsType], 'isFetching': false}
+        }
+    },
+
+    /**
+     * 获取新闻时的异常处理mutation
+     * @param {*} state 
+     * @param {查询新闻的错误时产生的信息} param1 
+     */
+    [GET_NEWS_ERROR](state, {newsType = '__all__', fetchError = ''}) {
+        // 理论上此时state.newsArray中必定有对应的新闻类型
+        if (state.newsArray[newsType]){
+            // newsArray中已存在对应的新闻类别
+            // 设置对应新闻类别对象中的错误提示
+            state.newsArray[newsType] = {...state.newsArray[newsType], 'fetchError': fetchError}
         }
     }
 }
