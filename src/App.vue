@@ -50,7 +50,7 @@ export default {
     }
     .toutiao-main {
       position: relative;
-      @include attr-px-dpr(padding-top, 80px);
+      @include attr-px-dpr(margin-top, 80px);
     }
   }
 </style>

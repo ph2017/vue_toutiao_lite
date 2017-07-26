@@ -12,9 +12,12 @@
         
         <div ref="toutiaoMain" id="toutiao-main">
             <v-TouPanel v-for="(item, index) in getNewsByType" :key="index" :newsItem="item"></v-TouPanel>
-            <div class="loading-tip">
-                加载中...
-            </div>
+            <v-ExposureView :containerEl="exposureViewContainer" :oneProps="exposureViewOne" :fireProps="exposureViewFire">
+                <div class="loading-tip">
+                    加载中...
+                </div>
+            </v-ExposureView>
+            
         </div>
     </div>
 </template>
@@ -24,6 +27,7 @@
     import store from '../../store/index.js'
     import TouPanel from 'components/ToutiaoPanel/TouPanel'
     import BetterScrollView from 'components/BetterScrollView/BetterScrollView'
+    import ExposureView from 'components/ExposureView/ExposureView.vue'
 
     export default {
         name: 'TouMain',
@@ -36,7 +40,19 @@
                 loading: false,  // 表示是否正在刷新中
                 touchStart: 0,  // 手指触摸屏幕的起点的Y轴坐标
                 distance: 0,     // 手指滑动的距离，Y轴距离
-                scrollTopDistance: 0    // 记录控件的滑动距离
+                scrollTopDistance: 0,    // 记录控件的滑动距离
+                exposureViewContainer: '#toutiao-main',   // 曝光组件的container的选择器，用作曝光组件的props
+                exposureViewOne: {
+                    // 监听曝光控件可见事件
+                    event: 'isVisiable',
+                    handler: () => {
+                        this.getNews({newsType: this.getRouteQueryParam()})
+                    }
+                },
+                exposureViewFire: {
+                    // 曝光事件发生时，曝光组件内部应调用'isVisiable'事件的处理函数
+                    event: 'isVisiable'
+                }
             }
         },
         methods: {            
@@ -133,9 +149,9 @@
         //     }
         // },
         // mounted() {
-        //     let newsType = this.$route.query.type
-        //     debugger
-        //     this.news = this.$store.state.newsArray[newsType].news
+        //     this.$nextTick(() => {
+        //         this.exposureViewContainer = this.$refs.toutiaoMain
+        //     })
         // },
         created() {
             // 组件created时， 调用action，根据路由查询新闻
@@ -143,6 +159,7 @@
             this.getNews({newsType: param});
 
             this.$nextTick(() => {
+                // debugger
                 const container = this.$refs.toutiaoMain
                 const touchRefreshWrapper = this.$refs.touchRefreshWrapper
                 const touchRefresh = this.$refs.touchRefresh
@@ -244,12 +261,13 @@
         },
         components: {
             'v-TouPanel': TouPanel,
-            'v-scroll': BetterScrollView
+            'v-scroll': BetterScrollView,
+            'v-ExposureView': ExposureView
         }
     }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss">
     @import '../../common/style/mixin.scss';
     @import '../../common/style/basic.scss';
 
@@ -257,13 +275,18 @@
         // background: yellowgreen;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;  //这个属性可以激活平滑滚动 ios5+
+        .loading-tip {
+            @include attr-px-dpr(font-size, 16px);
+            @include attr-px-dpr(line-height, 48px);
+            color: #999;
+            text-align: center;
+        }
     }
     .vue-touch-refresh {
         position: absolute;
         height: 0;
         width: 100%;
         background-color: transparent;
-        // transition: all .5s ease-in-out;
         .refresh-container {
             position: absolute;
             left: 50%;
