@@ -135,7 +135,7 @@ export default {
         // 开始获取新闻详情
         commit(GET_NEWS_INFO_START, {isFetching: true})
         // 查询新闻内容api
-        let newsInfoApi = `http://m.toutiao.com/i${groupId}/info/`
+        let newsInfoApi = `https://m.toutiao.com/i${groupId}/info/`
         // 调用今日头条接口，异步查询
         jsonp(newsInfoApi,
             function(err, res) {
