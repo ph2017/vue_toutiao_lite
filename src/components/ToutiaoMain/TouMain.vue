@@ -52,7 +52,10 @@
                 exposureViewFire: {
                     // 曝光事件发生时，曝光组件内部应调用'isVisiable'事件的处理函数
                     event: 'isVisiable'
-                }
+                },
+                // 记录每个类型新闻列表的Y轴偏移， 例子：__all__:{y: 20}
+                // 记录之后，方便在路由改变时，自动移动到上次操作的位置
+                scrollTopStatus: {}
             }
         },
         methods: {            
@@ -66,12 +69,36 @@
                 // window.addEventListener('scroll', this.scrollHandler)
                 (this.$refs.toutiaoMain).addEventListener('scroll', this.scrollHandler)
             },
+            // 记录当前新闻列表y轴偏移的方法，在路由改变时调用
+            recordNewsScrollY(newsType) {
+                // 获取当前newsType新闻类型的Y轴偏移量
+                let scrollY = this.$refs.toutiaoMain.scrollTop
+                let scrollTopStatus = this.scrollTopStatus
+
+                if (scrollTopStatus[newsType]) {
+                    // this.scrollTopStatus中存在newsType对象的话，则修改
+                    this.$set(scrollTopStatus[newsType], 'y', scrollY)
+                } else {
+                    // 否则添加
+                    this.$set(scrollTopStatus, newsType, {y: scrollY})
+                }
+            },
+            // 从this.scrollTopStatus缓存中查询新闻列表的y轴偏移
+            getRecordNewsScroll(newsType) {
+                let scrollObj = this.scrollTopStatus[newsType]
+                if (scrollObj) {
+                    return scrollObj.y
+                } else {
+                    return 0
+                }
+            },
             scrollHandler(event) {
                 // console.log('scrollHandler event = ', event)
                 // let scrollTop = window.document.body.scrollTop
                 let scrollTop = (this.$refs.toutiaoMain).scrollTop
                 this.scrollTopDistance = scrollTop
                 console.log('scrollTop = ' + scrollTop)
+                this.recordNewsScrollY(this.getRouteQueryParam())
             },
             /**
              * 下拉刷新动画效果设置方法
@@ -143,11 +170,14 @@
                 return this.$store.state.newsArray[newsType].FetchError
             }
         },
-        // watch: {
-        //     getNewsByType(val) {
-        //         this.news = val
-        //     }
-        // },
+        watch: {
+            '$route': function(newValue, oldValue) {
+                // 路由改变时，自动偏移到保存的y坐标
+                let routeParam = this.getRouteQueryParam()
+                let scrollY = this.getRecordNewsScroll(routeParam)
+                this.$refs.toutiaoMain.scrollTop = scrollY
+            }
+        },
         // mounted() {
         //     this.$nextTick(() => {
         //         this.exposureViewContainer = this.$refs.toutiaoMain
