@@ -148,7 +148,6 @@ export default {
                     // 处理获取新闻详情异常
                     commit(GET_NEWS_INFO_ERROR, {fetchError: ''});
                 } else if (err) {
-                    debugger
                     console.log('请求失败', err)
                     // 结束获取新闻详情
                     commit(GET_NEWS_INFO_END, {isFetching: false});
