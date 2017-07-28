@@ -108,6 +108,27 @@ export default {
         //         // 结束获取新闻
         //         commit(GET_NEWS_END, {newsType: payload.newsType});
         //     });
+
+        // let newsUrlApi = 'http://m.toutiao.com/i6444007669471642126/info/'
+        // // 调用今日头条接口，异步查询
+        // jsonp(newsUrlApi,
+        //     function(err, res) {
+        //         if (res) {
+        //             console.log('jsonp请求成功', res)
+        //             // 结束获取新闻
+        //             commit(GET_NEWS_END, {newsType: payload.newsType});
+        //             // 处理获取到的新闻
+        //             commit(REFRESH_NEWS, {newsType: payload.newsType, news: res.data, returnCount: res.return_count});
+        //             // 结束获取新闻
+        //             commit(GET_NEWS_ERROR, {newsType: payload.newsType, fetchError: ''});
+        //         } else if (err) {
+        //             console.log('请求失败', err)
+        //             // 结束获取新闻
+        //             commit(GET_NEWS_END, {newsType: payload.newsType});
+        //             // 结束获取新闻
+        //             commit(GET_NEWS_ERROR, {newsType: payload.newsType, fetchError: err});
+        //         }
+        // })
     }
         
 }

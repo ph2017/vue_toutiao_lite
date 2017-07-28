@@ -1,4 +1,5 @@
-import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS} from './mutations-types'
+import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS,
+        GET_NEWS_INFO_START, GET_NEWS_INFO_END, GET_NEWS_INFO_ERROR} from './mutations-types'
 
 export default {
     /**
@@ -90,5 +91,35 @@ export default {
             // 设置对应新闻类别对象中的错误提示
             state.newsArray[newsType] = {...state.newsArray[newsType], 'fetchError': fetchError}
         }
+    },
+
+    /**
+     * 开始异步获取新闻详情的mutation
+     * @param {$store.state, 会自动注入} state 
+     * @param {参数例子：{newsType: 'xxx'}} payload 
+     */
+    [GET_NEWS_INFO_START](state, {isFetching = true}) {
+        // 设置state中的newsInfo.isFetching
+        state.newsInfo = Object.assign({}, state.newsInfo, {isFetching: isFetching})
+    },
+
+    /**
+     * 结束异步获取新闻详情的mutation
+     * @param {$store.state, 会自动注入} state 
+     * @param {参数例子：{newsType: 'xxx'}} payload 
+     */
+    [GET_NEWS_INFO_END](state, {isFetching = false}) {
+        // 设置state中的newsInfo.isFetching
+        state.newsInfo = Object.assign({}, state.newsInfo, {isFetching: isFetching})
+    },
+
+    /**
+     * 获取新闻详情的异常处理mutation
+     * @param {*} state 
+     * @param {查询新闻的错误时产生的信息} param1 
+     */
+    [GET_NEWS_INFO_ERROR](state, {fetchError = ''}) {
+        // 理论上此时state.newsArray中必定有对应的新闻类型
+        state.newsInfo = Object.assign({}, state.newsInfo, {fetchError: fetchError})
     }
 }

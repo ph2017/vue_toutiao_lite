@@ -82,7 +82,6 @@
              * 触发注册事件处理的方法
              */
             fire(event, args) {
-                debugger
                 var exitEvent = this.events.hasOwnProperty(event);
                 if (exitEvent) {
                     for (var i = 0, len = this.events[event].length; i < len; i++) {
@@ -141,7 +140,6 @@
                         self.timerID = setTimeout(function() {
                             let visiable = self.isVisiable()
                             if (visiable) {
-                                debugger
                                 console.log('曝光组件可见!!')
                                 // 曝光组件可见时，自动触发回调函数
                                 if (self.fireProps.args) {

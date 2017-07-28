@@ -72,6 +72,7 @@ export default new Vuex.Store({
         __all__: {
             // 是否查询中
             isFetching: false,
+            fetchError: '',
             news: []
         },
         news_hot: {
@@ -116,6 +117,15 @@ export default new Vuex.Store({
           news: []
         }
     }
+  },
+  // 根据新闻的id获取到的新闻内容
+  newsInfo: {
+    // 是否查询中
+    isFetching: false,
+    // 查询异常
+    fetchError: '',
+    // 新闻内容对象
+    newsDetail: {}
   },
   getters: {
     /**

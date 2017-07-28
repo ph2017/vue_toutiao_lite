@@ -1,27 +1,22 @@
 <template>
-  <div id="app">
-   <router-view v-cloak></router-view>
-   <!--<header class="toutiao-header">
+  <div class="toutiao-home">
+   <header class="toutiao-header">
       <v-TouHeader></v-TouHeader>
       <v-TouNav v-bind:nav-title="navTitle"></v-TouNav>
    </header>
    <main class="toutiao-main">
       <v-TouMain></v-TouMain>
-   </main>-->
-   
+   </main>
   </div>
 </template>
 
 <script>
-// import {mapState} from 'vuex'
 import TouHeader from 'components/ToutiaoHeader/TouHeader'
 import TouMain from 'components/ToutiaoMain/TouMain'
 import TouNav from 'components/ToutiaoNav/TouNav'
-import store from './store/index.js'
 
 export default {
-  name: 'app',
-  store,
+  name: 'ToutiaoHome',
   computed: {
     navTitle() {
       return this.$store.state.navTitle
@@ -39,9 +34,9 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './common/style/mixin.scss';
+  @import '../../common/style/mixin.scss';
   
-  #app {
+  .toutiao-home {
     .toutiao-header {
       position: fixed;
       top: 0;

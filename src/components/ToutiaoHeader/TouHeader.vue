@@ -27,8 +27,8 @@
         store,
         data() {
             return {
-                // 刷新按钮动画是否播放中,默认为false
-                refreshAnimatePlaying: false
+                // 新闻容器的选择器
+                newsContainerEl: '#toutiao-main'
             }
         },
         methods: {
@@ -55,6 +55,13 @@
                 //         Velocity(refreshBtn, {rotateZ: '0deg'}, {duration: 0})
                 //     }
                 // })
+
+                // newsContainer回滚到顶部
+                const newsContainer = document.querySelector(this.newsContainerEl)
+                if (newsContainer) {
+                    newsContainer.scrollTop = 0
+                }
+
                 const type = this.getRouteQueryParam()
                 this.refreshNews({newsType: type})
             },
