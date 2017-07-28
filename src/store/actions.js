@@ -10,6 +10,7 @@ export default {
      * @param {例子：{type: '代表要commit的mutation', data: '参数' }} payload 
      */
     getNews({commit, state}, payload) {
+
         // 开始获取新闻
         commit(GET_NEWS_START, {newsType: payload.newsType})
 

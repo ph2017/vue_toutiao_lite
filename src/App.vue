@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-   <router-view v-cloak></router-view>
+    <router-view v-cloak></router-view>
    <!--<header class="toutiao-header">
       <v-TouHeader></v-TouHeader>
       <v-TouNav v-bind:nav-title="navTitle"></v-TouNav>

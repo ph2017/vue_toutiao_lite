@@ -7,7 +7,14 @@ import router from './router'
 import './common/js/flexible'
 // css样式初始化
 import './common/style/reset.css'
+import VueLazyload from 'vue-lazyload'
 
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    // error: '@/assets/imgerror.jpg',
+    // loading: '@/assets/pulldownload.gif',
+    attempt: 1
+});
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

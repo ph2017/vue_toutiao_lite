@@ -6,7 +6,7 @@
                 <div class="list-imgs">
                     <ul class="clearfix">
                         <li v-for="(item, index) in newsItem.image_list" class="img-wrapper" :key="index">
-                            <img :src="item.url" alt="">
+                            <img v-lazy="item.url" alt="新闻图片">
                         </li>
                     </ul>
                 </div>
