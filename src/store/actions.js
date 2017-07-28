@@ -14,7 +14,7 @@ export default {
         // 开始获取新闻
         commit(GET_NEWS_START, {newsType: payload.newsType})
 
-        let newsUrlApi = 'http://m.toutiao.com/list/?tag=' + payload.newsType + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
+        let newsUrlApi = 'https://m.toutiao.com/list/?tag=' + payload.newsType + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
         // 调用今日头条接口，异步查询
         jsonp(newsUrlApi,
             function(err, res) {
@@ -64,7 +64,7 @@ export default {
         // 开始获取新闻
         commit(GET_NEWS_START, {newsType: payload.newsType})
 
-        let newsUrlApi = 'http://m.toutiao.com/list/?tag=' + payload.newsType + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
+        let newsUrlApi = 'https://m.toutiao.com/list/?tag=' + payload.newsType + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
         // 调用今日头条接口，异步查询
         jsonp(newsUrlApi,
             function(err, res) {
