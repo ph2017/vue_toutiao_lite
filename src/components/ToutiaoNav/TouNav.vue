@@ -59,8 +59,13 @@
                 // 记录当前导航菜单的x轴滚动偏移
                 this.recordNavScrollX(routeParam)
 
+                // $store.state.newArray中存在对应类型的新闻缓存时，不自动查询
+                if (!this.getNewsByType || this.getNewsByType.length === 0) {
+                    // 调用getNews这个action, 传入当前导航菜单参数
+                    this.getNews({newsType: routeParam})
+                }
                 // 调用getNews这个action, 传入当前导航菜单参数
-                this.getNews({newsType: routeParam})
+                // this.getNews({newsType: routeParam})
             },
             // 记录当前导航菜单x轴偏移的方法，在点击导航菜单时调用
             recordNavScrollX(newsType) {
@@ -108,7 +113,10 @@
             }
         },
         computed: {
-            
+            getNewsByType() {
+                const newsType = this.getRouteQueryParam()
+                return this.$store.state.newsArray[newsType].news
+            }
         },
         created() {
             this.$nextTick(() => {

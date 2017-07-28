@@ -154,10 +154,14 @@
         //     })
         // },
         created() {
-            // 组件created时， 调用action，根据路由查询新闻
-            const param = this.getRouteQueryParam()
-            this.getNews({newsType: param});
 
+            // $store.state.newArray中存在对应类型的新闻缓存时，不自动查询
+            if (!this.getNewsByType || this.getNewsByType.length === 0) {
+                // 组件created时， 调用action，根据路由查询新闻
+                const param = this.getRouteQueryParam()
+                this.getNews({newsType: param});
+            }
+            
             this.$nextTick(() => {
                 // debugger
                 const container = this.$refs.toutiaoMain
