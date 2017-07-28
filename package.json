@@ -101,5 +101,5 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "homepage": "https://github.com/ph2017/vue_toutiao_lite/build"
+  "homepage": "https://github.com/ph2017/vue_toutiao_lite/dist"
 }
