@@ -1,13 +1,7 @@
 // import axios from 'axios'
 import jsonp from 'jsonp'
-import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS} from './mutations-types'
-
-// 今日头条的api
-// const newsUrlApi = 'http://is.snssdk.com/api/news/feed/v51/?category=__all__&refer=1&count=20&min_behot_time=1491981025&last_refresh_sub_entrance_interval=1491981165&loc_mode=&loc_time=1491981000&latitude=&longitude=&city=&tt_from=pull&lac=&cid=&cp=&iid=0123456789&device_id=12345678952&ac=wifi&channel=&aid=&app_name=&version_code=&version_name=&device_platform=&ab_version=&ab_client=&ab_group=&ab_feature=&abflag=3&ssmix=a&device_type=&device_brand=&language=zh&os_api=&os_version=&openudid=1b8d5bf69dc4a561&manifest_version_code=&resolution=&dpi=&update_version_code=&_rticket='
-// 查询新闻列表的api
-// const newsUrlApi = 'http://m.toutiao.com/list/?tag=' + '__all__' + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000)
-// 查询新闻详情的api
-// const newsDetailApi = 'http://m.toutiao.com/i6364969235889783298/info/'
+import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS,
+        GET_NEWS_INFO, GET_NEWS_INFO_START, GET_NEWS_INFO_END, GET_NEWS_INFO_ERROR} from './mutations-types'
 
 export default {
     /**
@@ -129,6 +123,38 @@ export default {
         //             commit(GET_NEWS_ERROR, {newsType: payload.newsType, fetchError: err});
         //         }
         // })
+    },
+
+    /**
+     * 根据新闻id查询新闻详情
+     * @param {commit: $store中的commit方法} param0 
+     * @param {groupId是新闻的id} param1 
+     */
+    getNewsInfo({commit, state}, {groupId = ''}) {
+        // 开始获取新闻详情
+        commit(GET_NEWS_INFO_START, {isFetching: true})
+        // 查询新闻内容api
+        let newsInfoApi = `http://m.toutiao.com/i${groupId}/info/`
+        // 调用今日头条接口，异步查询
+        jsonp(newsInfoApi,
+            function(err, res) {
+                if (res && res.success) {
+                    console.log('jsonp请求成功，新闻详情', res)
+                    // 结束获取新闻详情
+                    commit(GET_NEWS_INFO_END, {isFetching: false});
+                    // 处理获取到的新闻详情
+                    commit(GET_NEWS_INFO, {newsDetail: res.data});
+                    // 处理获取新闻详情异常
+                    commit(GET_NEWS_INFO_ERROR, {fetchError: ''});
+                } else if (err) {
+                    debugger
+                    console.log('请求失败', err)
+                    // 结束获取新闻详情
+                    commit(GET_NEWS_INFO_END, {isFetching: false});
+                    // 处理获取新闻详情异常
+                    commit(GET_NEWS_INFO_ERROR, {fetchError: err});
+                }
+        })
     }
         
 }

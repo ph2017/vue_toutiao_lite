@@ -1,5 +1,5 @@
 import {GET_NEWS_START, GET_NEWS_END, GET_NEWS, GET_NEWS_ERROR, REFRESH_NEWS,
-        GET_NEWS_INFO_START, GET_NEWS_INFO_END, GET_NEWS_INFO_ERROR} from './mutations-types'
+        GET_NEWS_INFO, GET_NEWS_INFO_START, GET_NEWS_INFO_END, GET_NEWS_INFO_ERROR} from './mutations-types'
 
 export default {
     /**
@@ -94,15 +94,24 @@ export default {
     },
 
     /**
+     * 获取到新闻详情后的处理方法
+     * @param {$store.state, 会自动注入} state 
+     * @param {新闻详情} param1 
+     */
+    [GET_NEWS_INFO](state, {newsDetail = {}}) {
+        state.newsInfo = Object.assign({}, state.newsInfo, {newsDetail: newsDetail})
+    },
+
+    /**
      * 开始异步获取新闻详情的mutation
      * @param {$store.state, 会自动注入} state 
      * @param {参数例子：{newsType: 'xxx'}} payload 
      */
     [GET_NEWS_INFO_START](state, {isFetching = true}) {
         // 设置state中的newsInfo.isFetching
-        state.newsInfo = Object.assign({}, state.newsInfo, {isFetching: isFetching})
+        state.newsInfo = {...state.newsInfo, 'isFetching': isFetching}
     },
-
+       
     /**
      * 结束异步获取新闻详情的mutation
      * @param {$store.state, 会自动注入} state 
@@ -110,7 +119,7 @@ export default {
      */
     [GET_NEWS_INFO_END](state, {isFetching = false}) {
         // 设置state中的newsInfo.isFetching
-        state.newsInfo = Object.assign({}, state.newsInfo, {isFetching: isFetching})
+        state.newsInfo = {...state.newsInfo, 'isFetching': isFetching}
     },
 
     /**

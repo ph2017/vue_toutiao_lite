@@ -116,27 +116,29 @@ export default new Vuex.Store({
           isFetching: false,
           news: []
         }
+    },
+    // 根据新闻的id获取到的新闻内容
+    newsInfo: {
+      // 是否查询中
+      isFetching: false,
+      // 查询异常
+      fetchError: '',
+      // 新闻内容对象
+      newsDetail: {}
     }
-  },
-  // 根据新闻的id获取到的新闻内容
-  newsInfo: {
-    // 是否查询中
-    isFetching: false,
-    // 查询异常
-    fetchError: '',
-    // 新闻内容对象
-    newsDetail: {}
   },
   getters: {
     /**
      * 根据type获取store中的news数组
      */
-    getNewsByType: (state, type) => {
-      let newsObj = state.newsArray[type]
-      if (newsObj) {
-        return newsObj.news
-      }
-      return []
+    getNewsInfoResult: (state) => {
+      return state.newsInfo.newsDetail
+    },
+    getNewsInfoFetching: (state) => {
+      return state.newsInfo.isFetching
+    },
+    getNewsInfoError: (state) => {
+      return state.newsInfo.fetchError
     }
   }
 })

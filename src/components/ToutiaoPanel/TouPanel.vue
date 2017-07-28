@@ -1,6 +1,6 @@
 <template>
     <section class="news-section">
-        <router-link to="{path:{'/' + newsItem.group_id + '/info'}}" class="news-link" >
+        <router-link :to="{name:'newsInfo', query:{groupId:newsItem.item_id}}" class="news-link" >
             <div class="news-item">
                 <h3 class="news_title line3">{{newsItem.title}}</h3>
                 <div class="list-imgs">
