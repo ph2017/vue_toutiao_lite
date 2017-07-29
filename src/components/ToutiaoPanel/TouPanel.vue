@@ -81,6 +81,7 @@
                         display: block;
                         width: 100%;
                         border: none;
+                        transition: opacity .3s ease;
                     }
                 }
             }

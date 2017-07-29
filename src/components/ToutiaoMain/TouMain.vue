@@ -143,12 +143,19 @@
                 // 映射 this.getNews() 为 this.$store.dispatch('getNews')
                 'getNews',
                 'refreshNews'
-            ])
+            ]),
+            /**
+             * 广告过滤器
+             */
+            notAdNews(newsObj) {
+                // 如果包含ad_label属性，则是广告
+                return !newsObj.hasOwnProperty('ad_label')
+            }
         },
         computed: {
             getNewsByType() {
                 const newsType = this.getRouteQueryParam()
-                return this.$store.state.newsArray[newsType].news
+                return this.$store.state.newsArray[newsType].news.filter(this.notAdNews)
             },
             isFetchingNews() {
                 const newsType = this.getRouteQueryParam()
