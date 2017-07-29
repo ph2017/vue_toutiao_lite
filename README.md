@@ -1,7 +1,6 @@
 # toutiao-lite
 > 这是个移动端新闻WebApp，使用vue.js 2.0框架开发
 
-
 ##技术栈
 vue + vuex + vue-router + es6 + flexible + sass + webpack
 
