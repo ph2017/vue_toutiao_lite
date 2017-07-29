@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view v-cloak></router-view>
+    <keep-alive include="ToutiaoHome" exclude="ToutiaoDetail">
+      <router-view v-cloak></router-view>
+    </keep-alive> 
    <!--<header class="toutiao-header">
       <v-TouHeader></v-TouHeader>
       <v-TouNav v-bind:nav-title="navTitle"></v-TouNav>
@@ -14,10 +16,8 @@
 
 <script>
 // import {mapState} from 'vuex'
-import TouHeader from 'components/ToutiaoHeader/TouHeader'
-import TouMain from 'components/ToutiaoMain/TouMain'
-import TouNav from 'components/ToutiaoNav/TouNav'
 import store from './store/index.js'
+// import ToutiaoHome from '@/views/ToutiaoHome/ToutiaoHome'
 
 export default {
   name: 'app',
@@ -28,12 +28,7 @@ export default {
     }
   },
   components: {
-    // 头条的头部
-    'v-TouHeader': TouHeader,
-    // 头条的中间内容部分
-    'v-TouMain': TouMain,
-    // 导航
-    'v-TouNav': TouNav
+    // ToutiaoHome
   }
 }
 </script>

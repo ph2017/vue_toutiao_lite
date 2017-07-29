@@ -37,7 +37,8 @@
     import moment from 'moment'
     import {mapActions, mapGetters} from 'vuex'
 
-    export default {    
+    export default {   
+        name: 'ToutiaoDetail',
         data() {
             return {
                 // 通过接口查询的新闻详情
