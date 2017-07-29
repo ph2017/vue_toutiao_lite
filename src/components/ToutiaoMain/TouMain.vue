@@ -7,7 +7,7 @@
             <span class="refresh-container">
                 <span ref="touchRefresh" class="refresh"><i class="icon icon-refresh"></i></span>
             </span>
-            {{this.msg}}
+            <!--{{this.msg}}-->
         </div>
         
         <div ref="toutiaoMain" id="toutiao-main">

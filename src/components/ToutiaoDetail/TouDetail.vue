@@ -27,8 +27,7 @@
             <div class="article-content" v-html="newsDetail.content">
             </div>
         </article>
-        <section v-if="isLoading">
-            加载中...
+        <section v-if="isLoading" class="loading">
         </section>
     </div>
 </template>
@@ -150,6 +149,7 @@
                         >img {
                             width: 100%;
                             height: 100%;
+                            border-radius: 50%;
                         }
                     } 
                 }
@@ -206,6 +206,12 @@
                     @include attr-px-dpr(margin-bottom, 4px);
                 }
             }
+        }
+        .loading {
+            position: absolute;
+            height: 60%;
+            width: 100%;
+            background: url('./images/loading.png') no-repeat center;
         }
     }
 </style>
