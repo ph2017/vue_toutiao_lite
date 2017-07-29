@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!--ToutiaoHome组件缓存，ToutiaoDetail不缓存-->
     <keep-alive include="ToutiaoHome" exclude="ToutiaoDetail">
       <router-view v-cloak></router-view>
     </keep-alive> 
@@ -17,7 +18,6 @@
 <script>
 // import {mapState} from 'vuex'
 import store from './store/index.js'
-// import ToutiaoHome from '@/views/ToutiaoHome/ToutiaoHome'
 
 export default {
   name: 'app',
@@ -28,7 +28,6 @@ export default {
     }
   },
   components: {
-    // ToutiaoHome
   }
 }
 </script>

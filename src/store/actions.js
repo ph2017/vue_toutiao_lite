@@ -19,7 +19,7 @@ export default {
         jsonp(newsUrlApi,
             function(err, res) {
                 if (res) {
-                    console.log('jsonp请求成功', res)
+                    // console.log('jsonp请求成功', res)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 处理获取到的新闻
@@ -27,7 +27,7 @@ export default {
                     // 清空获取新闻异常信息
                     commit(GET_NEWS_ERROR, {newsType: payload.newsType, fetchError: ''});
                 } else if (err) {
-                    console.log('请求失败', err)
+                    // console.log('请求失败', err)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 处理获取新闻异常信息
@@ -69,7 +69,7 @@ export default {
         jsonp(newsUrlApi,
             function(err, res) {
                 if (res) {
-                    console.log('jsonp请求成功', res)
+                    // console.log('jsonp请求成功', res)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 处理获取到的新闻
@@ -77,7 +77,7 @@ export default {
                     // 结束获取新闻
                     commit(GET_NEWS_ERROR, {newsType: payload.newsType, fetchError: ''});
                 } else if (err) {
-                    console.log('请求失败', err)
+                    // console.log('请求失败', err)
                     // 结束获取新闻
                     commit(GET_NEWS_END, {newsType: payload.newsType});
                     // 结束获取新闻
@@ -140,7 +140,7 @@ export default {
         jsonp(newsInfoApi,
             function(err, res) {
                 if (res && res.success) {
-                    console.log('jsonp请求成功，新闻详情', res)
+                    // console.log('jsonp请求成功，新闻详情', res)
                     // 结束获取新闻详情
                     commit(GET_NEWS_INFO_END, {isFetching: false});
                     // 处理获取到的新闻详情
@@ -148,7 +148,7 @@ export default {
                     // 处理获取新闻详情异常
                     commit(GET_NEWS_INFO_ERROR, {fetchError: ''});
                 } else if (err) {
-                    console.log('请求失败', err)
+                    // console.log('请求失败', err)
                     // 结束获取新闻详情
                     commit(GET_NEWS_INFO_END, {isFetching: false});
                     // 处理获取新闻详情异常

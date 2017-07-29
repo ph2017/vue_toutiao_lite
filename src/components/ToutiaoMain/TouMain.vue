@@ -59,12 +59,6 @@
             }
         },
         methods: {            
-            /**
-             * 加载新闻数据的方法
-             */
-            loadData() {
-                console.log('我是loadData')
-            },
             initScrollListener() {
                 // window.addEventListener('scroll', this.scrollHandler)
                 (this.$refs.toutiaoMain).addEventListener('scroll', this.scrollHandler)
@@ -97,7 +91,7 @@
                 // let scrollTop = window.document.body.scrollTop
                 let scrollTop = (this.$refs.toutiaoMain).scrollTop
                 this.scrollTopDistance = scrollTop
-                console.log('scrollTop = ' + scrollTop)
+                // console.log('scrollTop = ' + scrollTop)
                 this.recordNewsScrollY(this.getRouteQueryParam())
             },
             /**
@@ -140,15 +134,10 @@
                                 reject('fetch news error,' + this.fetchNewsError)
                                 clearInterval(timer)
                             }
-                            console.log('timer ++++++++++')
+                            // console.log('timer ++++++++++')
                         }, 300)
                     })
                 }
-                // return new Promise((resolve, reject) => {
-                //         setTimeout(() => {
-                //             resolve('i am the data')
-                //         }, 2000)
-                //     })
             },
             ...mapActions([
                 // 映射 this.getNews() 为 this.$store.dispatch('getNews')
@@ -210,7 +199,7 @@
                     // }
                     // 记录第一个触摸点作为起始位置
                     this.touchStart = event.targetTouches[0].clientY
-                    console.log('touchStart point', this.touchStart)
+                    // console.log('touchStart point', this.touchStart)
                 }, {passive: true})
 
                 container.addEventListener('touchmove', (event) => {
@@ -236,7 +225,7 @@
 
                         // 计算旋转角度
                         let rotageDeg = -(this.distance / maxDistanceY) * 360 + 'deg'
-                        console.log('rotageDer = ' + rotageDeg)
+                        // console.log('rotageDer = ' + rotageDeg)
 
                         this.pullDownRefreshShow({
                             resreshContainerElment: touchRefreshWrapper,
@@ -277,7 +266,7 @@
                         // touchRefreshWrapper.style.height = this.distance + 'px'
                         this.loading = true
                         this.pullDownRefreshNews().then((data) => {
-                            console.log('模拟异步查询', data)
+                            // console.log('模拟异步查询', data)
                             this.flag = false
                             this.loading = false
                             container.scrollTop = 0

@@ -88,7 +88,7 @@
                         this.events[event][i].handler(args);
                     }
                 } else {
-                    console.log('no event(' + event + ') exist');
+                    // console.log('no event(' + event + ') exist');
                 }
             },
             /**
@@ -140,7 +140,7 @@
                         self.timerID = setTimeout(function() {
                             let visiable = self.isVisiable()
                             if (visiable) {
-                                console.log('曝光组件可见!!')
+                                // console.log('曝光组件可见!!')
                                 // 曝光组件可见时，自动触发回调函数
                                 if (self.fireProps.args) {
                                     self.fire(self.fireProps.event, ...[self.fireProps.args])

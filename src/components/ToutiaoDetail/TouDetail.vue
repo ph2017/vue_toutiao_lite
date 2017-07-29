@@ -86,7 +86,7 @@
                             reject('fetch news info error,' + this.fetchNewsError)
                             clearInterval(timer)
                         }
-                        console.log('timer ++++++++++')
+                        // console.log('timer ++++++++++')
                     }, 300)
                 })
             }
@@ -97,31 +97,9 @@
             }
         },
         created() {
-            // this.getNewsInfo({groupId: this.$route.query.groupId})
-            // this.isLoading = true
-            // let self = this
-            // return new Promise((resolve, reject) => {
-            //     const timeId = setTimeout(() => {
-            //         debugger
-            //         if (!self.getNewsInfoFetching() && !self.getNewsInfoError()) {
-            //             resolve('fetch news info success')
-            //             // isLoading设置为false，表示请求结束
-            //             self.isLoading = false
-            //             // 更新newsDetail对象
-            //             self.newsDetail = self.getNewsInfoResult()
-            //             clearInterval(timeId)
-            //         } else if (!self.getNewsInfoFetching() && self.getNewsInfoError()) {
-            //             // isLoading设置为false，表示请求结束
-            //             self.isLoading = false
-            //             reject('fetch news info error,' + self.getStoreNewsInfoError)
-            //             clearInterval(timeId)
-            //         }
-            //         console.log('newsInfo timer ++++++++++')
-            //     }, 200)
-            // })
             let self = this
             this.initNewsInfo().then((data) => {
-                console.log('模拟异步查询', data)
+                // console.log('模拟异步查询', data)
                 self.isLoading = false
                 self.newsDetail = self.getNewsInfoResult()
             })
