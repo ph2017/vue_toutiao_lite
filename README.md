@@ -42,7 +42,7 @@ npm test
 ![加载错误，请在src/static/screenShot中查看](./static/screenShot/vue_lite_githubPages.png)
 
 ## 项目截图
-![加载错误，请在src/static/screenShot中查看](./static/screenShot/screenShot1.png)![加载错误，请在src/static/screenShot中查看](./static/screenShot/screenShot2.png)
+![加载错误，请在src/static/screenShot中查看](./static/screenShot/screenShot1.png)
 
 ## 最后
 > 本项目主要理解 vue 和 vuex 的原理，以及 vue + vuex 之间的配合方式
